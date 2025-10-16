@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reto Vulcano — En construcción</title>
+  <meta name="description" content="Reto Vulcano">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      /* Escalas fluidas para mantener margen y proporciones en todas las pantallas */
+      --space: clamp(16px, 4vw, 48px);                 /* margen/padding constante */
+      --gap: clamp(8px, 2.2vw, 18px);                  /* separación entre elementos */
+      --logo-w: clamp(180px, 36vw, 360px);             /* ancho del logo */
+      --lottie: clamp(160px, 28vw, 300px);             /* tamaño de la animación */
+      --h1: clamp(26px, 5vw, 46px);                    /* tamaño H1 */
+      --tag: clamp(14px, 2.6vw, 18px);                 /* tagline y lead */
+
+      --lava:#ff3b0a; --txt:#fff; --muted:#b9c0cf; --bg:#0b0f1a;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Arial;
+      color:var(--txt); text-align:center; overflow:hidden; background: var(--bg);
+    }
+
+    /* Fondo limpio sin “cortes” */
+    .vignette{
+      position:fixed; inset:0; z-index:0; pointer-events:none;
+      background:
+        radial-gradient(120% 80% at 50% 60%, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.00) 40%),
+        radial-gradient(130% 90% at 50% 60%, rgba(0,0,0,0.00) 55%, rgba(0,0,0,0.45) 100%);
+    }
+    .grain{
+      position:fixed; inset:0; z-index:1; pointer-events:none; opacity:.05;
+      background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.25'/%3E%3C/svg%3E");
+      background-size: 180px 180px; mix-blend-mode: soft-light;
+    }
+
+    .wrap{
+      position:relative; z-index:2; min-height:100dvh;
+      display:grid; place-items:center;
+      /* margen constante + safe-areas */
+      padding: calc(env(safe-area-inset-top, 0px) + var(--space))
+               var(--space)
+               calc(env(safe-area-inset-bottom, 0px) + var(--space));
+    }
+
+    /* Contenedor con ancho máximo para que siempre haya margen lateral */
+    .card{
+      width: min(960px, 100%);
+      display:flex; flex-direction:column; align-items:center;
+      gap: var(--gap);
+    }
+
+    .logo{
+      width: var(--logo-w); height:auto;
+      filter: drop-shadow(0 0 10px rgba(255,59,10,.25));
+      animation: logoPulse 3s ease-in-out infinite alternate;
+    }
+    @keyframes logoPulse{
+      from{transform:scale(1); filter:drop-shadow(0 0 6px rgba(255,59,10,.20))}
+      to{transform:scale(1.02); filter:drop-shadow(0 0 14px rgba(255,59,10,.38))}
+    }
+
+    h1{margin-top: calc(var(--gap) * 0.5); font-weight:700; font-size: var(--h1)}
+    .tagline{color:var(--muted); font-size: var(--tag); letter-spacing:.2px}
+    .line{width:140px;height:2px;margin: calc(var(--gap) * 0.8) auto; background:linear-gradient(90deg,var(--lava),transparent)}
+    p.lead{color:var(--muted); font-size: var(--tag)}
+
+    footer{
+      position:fixed; left:0; right:0; bottom:12px; z-index:2;
+      color:#8e97aa; font-size:12px; text-shadow:0 1px 2px rgba(0,0,0,.45);
+      padding-inline: var(--space);
+    }
+
+    /* Canvas nieve */
+    #snow{position:fixed; inset:0; z-index:1; pointer-events:none}
+
+    /* Tamaño de la animación Lottie controlado por clase, no inline */
+    .lottie{
+      width: var(--lottie);
+      height: var(--lottie);
+    }
+
+    /* Respeto a usuarios con reduce motion */
+    @media (prefers-reduced-motion: reduce){
+      .logo{animation:none}
+    }
+  </style>
+</head>
+<body>
+  <div class="vignette" aria-hidden="true"></div>
+  <canvas id="snow" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+
+  <main class="wrap" role="main" aria-label="Página en construcción de Reto Vulcano">
+    <div class="card">
+      <img class="logo" src="https://i.postimg.cc/SRYBkn79/Logo-Reto-Vulcano-Rojo-letra-blanca.png" alt="Logo oficial Reto Vulcano">
+      <h1>Nos vemos en 2026</h1>
+      <p class="tagline">Reto Vulcano — El reto más grande de América</p>
+      <div class="line" aria-hidden="true"></div>
+      <p class="lead">Sitio en construcción</p>
+
+      <!-- Animación Lottie de constructores -->
+      <script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.8.5/dist/dotlottie-wc.js" type="module"></script>
+      <dotlottie-wc
+        class="lottie"
+        src="https://lottie.host/50f61904-455a-459a-a09d-19d369fbf1c7/oR9kuZ6xa6.lottie"
+        autoplay
+        loop
+        aria-label="Constructores trabajando">
+      </dotlottie-wc>
+    </div>
+  </main>
+
+  <footer>© <span id="y"></span> Reto Vulcano — Desarrollado por CIMA A.C.</footer>
+
+  <script>
+    // Año dinámico
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // -------- Nieve minimalista en canvas (suave y eficiente) --------
+    const c = document.getElementById('snow');
+    const ctx = c.getContext('2d');
+    let W, H, flakes;
+
+    function resize(){
+      W = c.width = window.innerWidth;
+      H = c.height = window.innerHeight;
+      // cantidad proporcional a pantalla
+      const count = Math.min(220, Math.floor((W*H)/18000));
+      flakes = Array.from({length: count}, () => ({
+        x: Math.random()*W,
+        y: Math.random()*H,
+        r: 0.6 + Math.random()*1.8,
+        s: 0.3 + Math.random()*0.9,
+        w: 0.6 + Math.random()*1.2,
+        p: Math.random()*Math.PI*2
+      }));
+    }
+    window.addEventListener('resize', resize, {passive:true});
+    resize();
+
+    function tick(){
+      ctx.clearRect(0,0,W,H);
+      ctx.fillStyle = 'rgba(255,255,255,0.85)';
+      for (const f of flakes){
+        f.p += 0.01;
+        f.y += f.s;
+        f.x += Math.sin(f.p)*f.w*0.3;
+        if (f.y > H + 4){ f.y = -6; f.x = Math.random()*W; }
+        ctx.globalAlpha = 0.15 + (f.r/2.6);
+        ctx.beginPath(); ctx.arc(f.x, f.y, f.r, 0, Math.PI*2); ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+      requestAnimationFrame(tick);
+    }
+    tick();
+  </script>
+</body>
+</html>
